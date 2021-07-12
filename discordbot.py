@@ -1,16 +1,18 @@
-from discord.ext import commands
-import os
-import traceback
+import discord
 
-bot = commands.Bot(command_prefix='/')
-token = os.environ['DISCORD_BOT_TOKEN']
+TOKEN = 'ODUxMTM5MTk0ODUxNDI2MzQ2.YLz7JQ.sJiNqXrzRu190cE0LDFn-HT8Nd8'
 
-@bot.event
+client = discord.Client()
+
+@client.event
 async def on_ready():
-    await bot.change_presence(activity = discord.Game('Fortnite'))
+    print('ログインしました')
 
-@bot.command()
-async def fuck(ctx):
-    await ctx.send('pong')
-
-bot.run(token)
+@client.event
+async def on_message(message):
+    if message.content.startswith("!nlp"):
+        if client.user != message.author:
+            message = message
+            await client.send_message(message.channel, message)
+            
+client.run(TOKEN)
